@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GridView-Flip-Demo</string>
+
+    <!-- fragment_main strings -->
+    <string name="fragment_main_title">Main Fragment Title</string>
+    <string name="fragment_main_start_demo_button">Start Demo</string>
+
+
+    <!-- fragment_gridview strings -->
+    <string name="fragment_gridview_title">Gridview Fragment Title</string>
+
+</resources>
