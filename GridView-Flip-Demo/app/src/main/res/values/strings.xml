@@ -8,5 +8,10 @@
 
     <!-- fragment_gridview strings -->
     <string name="fragment_gridview_title">Gridview Fragment Title</string>
+    <string name="fragment_gridview_text">Add a gridview item every 200ms on a dummy thread</string>
+
+
+    <!-- grid_view_item strings -->
+    <string name="grid_view_item_text">22</string>
 
 </resources>

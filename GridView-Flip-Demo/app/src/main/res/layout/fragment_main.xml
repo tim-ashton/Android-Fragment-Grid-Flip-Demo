@@ -25,6 +25,7 @@
         android:id="@+id/fragment_main_start_demo_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:onClick="startDemo"
         android:text="@string/fragment_main_start_demo_button" />
 
 </LinearLayout>
