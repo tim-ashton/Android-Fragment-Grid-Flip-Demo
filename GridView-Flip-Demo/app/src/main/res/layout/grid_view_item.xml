@@ -1,18 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/grid_item_view_flipper"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/grid_view_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="@string/grid_view_item_text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout
+        android:id="@+id/front"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/grid_view_item_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grid_view_item_text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/grid_view_item_sub_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grid_view_item_sub_text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@android:color/black"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/grid_view_item_text_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grid_view_item_text_back"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/grid_view_item_sub_text_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/grid_view_item_sub_text"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</ViewFlipper>

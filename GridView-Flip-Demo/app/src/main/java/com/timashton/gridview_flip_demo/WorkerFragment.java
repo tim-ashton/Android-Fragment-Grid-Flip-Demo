@@ -140,7 +140,7 @@ public class WorkerFragment extends Fragment {
                     msg.obj = Integer.toString(i++);
                     mHandler.sendMessage(msg);
 
-                    Thread.sleep(200);
+                    Thread.sleep(100);
 
                     if (i == 50) {
                         mFinished = true;

@@ -3,6 +3,7 @@ package com.timashton.gridview_flip_demo;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 
@@ -50,7 +51,7 @@ public class MainActivity extends Activity implements WorkerFragment.WorkerCallb
 
         fm.beginTransaction()
                 .setCustomAnimations(
-                        R.animator.spin_grow_in,
+                        R.animator.grow_in,
                         R.animator.spin_shrink_out,
                         R.animator.spin_grow_in,
                         R.animator.spin_shrink_out)
@@ -58,8 +59,20 @@ public class MainActivity extends Activity implements WorkerFragment.WorkerCallb
                 .addToBackStack(null)
                 .commit();
 
-        WorkerFragment workerFragment = (WorkerFragment) fm.findFragmentByTag(WorkerFragment.TAG);
-        workerFragment.startAddItemsRunnable();
+        final WorkerFragment workerFragment =
+                (WorkerFragment) fm.findFragmentByTag(WorkerFragment.TAG);
+
+        int delay = getResources().getInteger(R.integer.show_grid_view_animation_time)
+                + getResources().getInteger(R.integer.spin_shrink_animation_time);
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                workerFragment.startAddItemsRunnable();
+            }
+        }, delay );
+
 
     }
 

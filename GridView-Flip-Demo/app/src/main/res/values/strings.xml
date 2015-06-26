@@ -13,5 +13,7 @@
 
     <!-- grid_view_item strings -->
     <string name="grid_view_item_text">22</string>
+    <string name="grid_view_item_text_back">The Back!</string>
+    <string name="grid_view_item_sub_text">Click Me</string>
 
 </resources>

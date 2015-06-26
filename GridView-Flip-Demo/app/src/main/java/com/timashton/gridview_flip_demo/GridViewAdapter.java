@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class GridViewAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        GridViewItem item = mList.get(position);
+        final GridViewItem item = mList.get(position);
         ViewHolder holder;
 
         // If it is a new item, create it otherwise use the existing item previously created in
@@ -51,27 +52,60 @@ public class GridViewAdapter extends BaseAdapter{
 
             LayoutInflater li = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = li.inflate(R.layout.grid_view_item, null);
+            convertView = li.inflate(R.layout.grid_view_item, parent, false);
 
             holder = new ViewHolder();
-            holder.mListItemText = (TextView) convertView.findViewById(R.id.grid_view_item_text);
+            holder.holderView = convertView;
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.mListItemText.setText(item.getItemText());
+        TextView gridItemText = (TextView) holder.holderView.findViewById(R.id.grid_view_item_text);
+        gridItemText.setText(item.getItemText());
+
+        //reference the viewFlipper
+        final ViewFlipper flipper = (ViewFlipper) holder.holderView.
+                findViewById(R.id.grid_item_view_flipper);
+
+        // Set the current view of the flipper
+        flipper.setDisplayedChild(item.getFlipperPosition());
+
+        //now you set your onclick and pass it the current viewflipper to control the displayed child
+        flipper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View click) {
+
+
+                flipViewFlipper(flipper, item);
+            }
+        });
+
+        //holder.mListItemText.setText(item.getItemText());
         return convertView;
     }
 
 
     private static class ViewHolder {
         public TextView mListItemText;
-
+        public View holderView;
     }
 
     public ArrayList<GridViewItem> getList(){
         return mList;
+    }
+
+    private void flipViewFlipper(ViewFlipper flipper, GridViewItem item){
+
+        if(flipper.getDisplayedChild() == 0){
+            flipper.setDisplayedChild(1);
+            item.setFlipperPosition(1);
+        }
+        else{
+            flipper.setDisplayedChild(0);
+            item.setFlipperPosition(0);
+        }
+
     }
 }

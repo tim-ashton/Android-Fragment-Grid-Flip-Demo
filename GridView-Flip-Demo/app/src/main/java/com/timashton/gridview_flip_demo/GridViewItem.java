@@ -14,6 +14,7 @@ public class GridViewItem implements Parcelable {
     private static final String TEXT_TAG = "item_text";
 
     private boolean mNewItem;
+    private int mFlipperPosition;
     private String mText;
 
     public GridViewItem(String text){
@@ -30,6 +31,14 @@ public class GridViewItem implements Parcelable {
         Bundle bundle = in.readBundle();
         mNewItem = bundle.getBoolean(NEW_ITEM_TAG);
         mText = bundle.getString(TEXT_TAG);
+    }
+
+    public int getFlipperPosition(){
+        return mFlipperPosition;
+    }
+
+    public void setFlipperPosition(int position){
+        mFlipperPosition = position;
     }
 
     public boolean isNewItem(){
