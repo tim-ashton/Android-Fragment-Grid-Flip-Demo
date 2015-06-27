@@ -16,7 +16,7 @@ public class StartFragment extends Fragment {
 
     public static final String TAG = StartFragment.class.getName();
 
-    public StartFragment newInstance(){
+    public static StartFragment newInstance(){
         return new StartFragment();
     }
 

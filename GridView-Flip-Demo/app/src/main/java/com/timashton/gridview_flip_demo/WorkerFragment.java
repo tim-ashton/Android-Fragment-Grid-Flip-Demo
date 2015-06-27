@@ -11,6 +11,11 @@ import java.lang.ref.WeakReference;
 
 /*
  * Created by Tim Ashton on 25/06/15.
+ *
+ * Just for fun, add the items on a background thread and handle orientation changes.
+ *
+ * Inner classes WorkerRunnable and WorkerHandler for creating and passing dummy
+ * messages back to the UI thread.
  */
 public class WorkerFragment extends Fragment {
 
@@ -18,7 +23,7 @@ public class WorkerFragment extends Fragment {
 
     private WorkerHandler mHandler;
     private static WorkerCallbacks mCallbacks;
-    private WorkerRunnable mRunnable;
+    private WorkerThread mRunnable;
 
     public WorkerFragment newInstance() {
         return new WorkerFragment();
@@ -101,7 +106,7 @@ public class WorkerFragment extends Fragment {
 
     public void startAddItemsRunnable() {
         Log.d(TAG, "startAddItemsRunnable()");
-        mRunnable = new WorkerRunnable();
+        mRunnable = new WorkerThread();
         mRunnable.start();
     }
 
@@ -111,18 +116,18 @@ public class WorkerFragment extends Fragment {
      *
      * Inner thread class to run the dummy thread by implementing runnable run method.
      *
-     * Allows parent to pause and restart the thread by calling the appropriate methods.
+     * Allows parent (WorkerFragment) to pause and restart the thread by calling the appropriate methods.
      *
      */
-    private class WorkerRunnable extends Thread {
+    private class WorkerThread extends Thread {
 
-        public final String TAG = WorkerRunnable.class.getName();
+        public final String TAG = WorkerThread.class.getName();
 
         private final Object mPauseLock;
         private boolean mPaused;
         private boolean mFinished;
 
-        public WorkerRunnable() {
+        public WorkerThread() {
             mPauseLock = new Object();
             mPaused = false;
             mFinished = false;
@@ -142,7 +147,7 @@ public class WorkerFragment extends Fragment {
 
                     Thread.sleep(100);
 
-                    if (i == 50) {
+                    if (i == 25) {
                         mFinished = true;
                     }
 

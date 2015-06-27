@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Fragment Transition durations -->
+    <integer name="show_grid_view_animation_time">1000</integer>
+    <integer name="spin_shrink_animation_time">1500</integer>
+
+    <!-- Card flip durations -->
+    <integer name="card_flip_time_full">300</integer>
+    <integer name="card_flip_time_half">150</integer>
+</resources>

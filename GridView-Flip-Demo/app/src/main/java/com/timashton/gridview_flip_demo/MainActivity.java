@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-
+/*
+The activity for this app.
+ */
 public class MainActivity extends Activity implements WorkerFragment.WorkerCallbacks{
 
     private static final String TAG = MainActivity.class.getName();
@@ -20,7 +22,7 @@ public class MainActivity extends Activity implements WorkerFragment.WorkerCallb
 
         if (savedInstanceState == null) {
             fm.beginTransaction()
-                    .add(R.id.container, new StartFragment())
+                    .add(R.id.container, StartFragment.newInstance())
                     .commit();
         }
 

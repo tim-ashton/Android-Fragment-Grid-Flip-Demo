@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/grid_item_view_flipper"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/grid_item"
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:orientation="vertical">
@@ -35,7 +35,8 @@
         android:layout_gravity="center"
         android:background="@android:color/black"
         android:gravity="center_horizontal|center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/grid_view_item_text_back"
@@ -55,4 +56,4 @@
 
     </LinearLayout>
 
-</ViewFlipper>
+</LinearLayout>

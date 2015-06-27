@@ -13,7 +13,8 @@ import java.util.ArrayList;
 /*
  * Created by Tim Ashton on 26/06/15.
  *
- * This fragment display the grid view.
+ * This fragment display the grid view and hancles storing the state of the grid
+ * view items on orientation change.
  */
 public class GridViewFragment extends Fragment{
 
@@ -56,6 +57,9 @@ public class GridViewFragment extends Fragment{
         return v;
     }
 
+    /*
+    Store the parcelable GridViewItems so they can be retrieved and re-created.
+     */
     @Override
     public void onSaveInstanceState(Bundle savedState) {
         super.onSaveInstanceState(savedState);

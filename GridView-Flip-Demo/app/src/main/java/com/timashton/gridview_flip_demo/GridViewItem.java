@@ -6,25 +6,27 @@ import android.os.Parcelable;
 
 /*
  * Created by Tim Ashton on 25/06/15.
+ *
+ * Parcelable items to store the state of each item in the grid view.
  */
 public class GridViewItem implements Parcelable {
 
-    private static final String TAG = GridViewItem.class.getName();
     private static final String NEW_ITEM_TAG = "new_item";
     private static final String TEXT_TAG = "item_text";
 
     private boolean mNewItem;
-    private int mFlipperPosition;
+    private ItemFace mItemFace;
     private String mText;
+
+    public enum ItemFace{
+        FRONT,
+        BACK
+    }
 
     public GridViewItem(String text){
         mNewItem = true;
         mText = text;
-    }
-
-    public GridViewItem(boolean newItem, String text){
-        mNewItem = newItem;
-        mText = text;
+        mItemFace = ItemFace.FRONT;
     }
 
     private GridViewItem(Parcel in) {
@@ -33,28 +35,16 @@ public class GridViewItem implements Parcelable {
         mText = bundle.getString(TEXT_TAG);
     }
 
-    public int getFlipperPosition(){
-        return mFlipperPosition;
+    public ItemFace getFace(){
+        return mItemFace;
     }
 
-    public void setFlipperPosition(int position){
-        mFlipperPosition = position;
-    }
-
-    public boolean isNewItem(){
-        return mNewItem;
+    public void setFace(ItemFace face){
+        mItemFace = face;
     }
 
     public String getItemText(){
         return mText;
-    }
-
-    public void setIsNewItem(boolean newItem){
-        mNewItem = newItem;
-    }
-
-    public void setItemText(String text){
-        mText = text;
     }
 
     @Override

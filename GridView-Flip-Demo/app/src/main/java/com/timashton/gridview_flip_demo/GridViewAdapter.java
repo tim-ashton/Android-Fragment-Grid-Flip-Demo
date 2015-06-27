@@ -1,5 +1,7 @@
 package com.timashton.gridview_flip_demo;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,16 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 
 import java.util.ArrayList;
 
 /*
  * Created by Tim Ashton on 25/06/15.
+ *
+ * Adapter for the gridview. Holds a list of grid view items and applies the card flip
+ * animations to the list item views. On screen orientation, this adapter uses stored
+ * items to re-create the state that the items should be in.
  */
 public class GridViewAdapter extends BaseAdapter{
-
-    public static final String TAG = GridViewAdapter.class.getName();
 
     private Activity mContext;
     private ArrayList<GridViewItem> mList;
@@ -62,33 +65,31 @@ public class GridViewAdapter extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        TextView gridItemText = (TextView) holder.holderView.findViewById(R.id.grid_view_item_text);
-        gridItemText.setText(item.getItemText());
-
-        //reference the viewFlipper
-        final ViewFlipper flipper = (ViewFlipper) holder.holderView.
-                findViewById(R.id.grid_item_view_flipper);
-
-        // Set the current view of the flipper
-        flipper.setDisplayedChild(item.getFlipperPosition());
-
-        //now you set your onclick and pass it the current viewflipper to control the displayed child
-        flipper.setOnClickListener(new View.OnClickListener() {
+        holder.holderView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View click) {
-
-
-                flipViewFlipper(flipper, item);
+            public void onClick(View v) {
+                flipGridViewItem(v, item);
             }
         });
 
-        //holder.mListItemText.setText(item.getItemText());
+        if(item.getFace() == GridViewItem.ItemFace.FRONT){ // Showing the front of the card
+
+            holder.holderView.findViewById(R.id.back).setVisibility(View.GONE);
+            holder.holderView.findViewById(R.id.front).setVisibility(View.VISIBLE);
+
+            TextView gridItemText = (TextView) holder.holderView.findViewById(R.id.grid_view_item_text);
+            gridItemText.setText(item.getItemText());
+        }
+        else{
+            holder.holderView.findViewById(R.id.front).setVisibility(View.GONE);
+            holder.holderView.findViewById(R.id.back).setVisibility(View.VISIBLE);
+        }
+
         return convertView;
     }
 
 
     private static class ViewHolder {
-        public TextView mListItemText;
         public View holderView;
     }
 
@@ -96,16 +97,95 @@ public class GridViewAdapter extends BaseAdapter{
         return mList;
     }
 
-    private void flipViewFlipper(ViewFlipper flipper, GridViewItem item){
 
-        if(flipper.getDisplayedChild() == 0){
-            flipper.setDisplayedChild(1);
-            item.setFlipperPosition(1);
+    private void flipGridViewItem(final View v, GridViewItem item){
+
+        v.clearAnimation();
+
+        if(item.getFace() == GridViewItem.ItemFace.FRONT){
+
+            // Set the item to back
+            item.setFace(GridViewItem.ItemFace.BACK);
+
+            final Animator in = AnimatorInflater.loadAnimator(mContext,
+                    R.animator.card_flip_left_in);
+            in.setTarget(v);
+
+
+            Animator.AnimatorListener flipOutListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    v.findViewById(R.id.front).setVisibility(View.GONE);
+                    v.findViewById(R.id.back).setVisibility(View.VISIBLE);
+                    in.start();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+
+            Animator out = AnimatorInflater.loadAnimator(mContext,
+                    R.animator.card_flip_left_out);
+            out.setTarget(v);
+            out.addListener(flipOutListener);
+            out.start();
         }
         else{
-            flipper.setDisplayedChild(0);
-            item.setFlipperPosition(0);
-        }
 
+            // Set the item to front
+            item.setFace(GridViewItem.ItemFace.FRONT);
+
+            final Animator in = AnimatorInflater.loadAnimator(mContext,
+                    R.animator.card_flip_right_in);
+            in.setTarget(v);
+
+
+            // A listener is required to determine the end fo the first animation
+            Animator.AnimatorListener flipOutListener = new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    v.findViewById(R.id.back).setVisibility(View.GONE);
+                    v.findViewById(R.id.front).setVisibility(View.VISIBLE);
+                    in.start();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            };
+
+            Animator out = AnimatorInflater.loadAnimator(mContext,
+                    R.animator.card_flip_right_out);
+            out.setTarget(v);
+            out.addListener(flipOutListener);
+            out.start();
+
+            // set the text view for the front of the card
+            TextView gridItemText = (TextView) v.findViewById(R.id.grid_view_item_text);
+            gridItemText.setText(item.getItemText());
+        }
     }
 }
